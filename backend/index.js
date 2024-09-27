@@ -13,6 +13,28 @@ connectDB();
 const app = express();
 app.use(cors());
 app.use(express.json());
+const createAdmin = async () => {
+    try {
+        const adminExists = await User.findOne({ email: process.env.ADMIN_EMAIL });
+
+        if (!adminExists) {
+            const admin = new User({
+                name: 'Admin',
+                email: process.env.ADMIN_EMAIL,
+                password: await bcrypt.hash(process.env.ADMIN_PASSWORD, 10),
+                isAdmin: true
+            });
+            await admin.save();
+            console.log('Admin user created');
+        } else {
+            console.log('Admin user already exists');
+        }
+    } catch (error) {
+        console.error('Error creating admin user:', error.message);
+    }
+};
+
+createAdmin();
 
 app.use('/api/orders', orderRoutes);
 
