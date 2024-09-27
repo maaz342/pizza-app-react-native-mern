@@ -4,7 +4,7 @@ dotenv.config();
 const connectDB = async () => {
     const MONGO_URI=process.env.MONGO_URI;
     try {
-        const conn = await mongoose.connect(MONGO_URI, {
+        const conn = await mongoose.connect("mongodb+srv://maaz:mik%40ilo52@movie.zh3bs.mongodb.net/pizzaApp", {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
